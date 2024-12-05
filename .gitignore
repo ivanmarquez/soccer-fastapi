@@ -1,0 +1,141 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Secrets / Configuration
+*.env
+*.env.*
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# SQLite databases (optional, if used for local dev)
+*.sqlite3
+
+# PostgreSQL logs and dumps
+*.log
+*.sql
+*.dump
+
+# Testing
+.coverage
+.tox/
+.nox/
+*.testrepository
+*.pytest_cache/
+cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+*.db
+
+# Pytest cache
+.pytest_cache/
+
+# Mypy
+.mypy_cache/
+
+# FastAPI static files (optional)
+staticfiles/
+
+# Pyre
+.pyre/
+
+# Local development logs
+*.log
+*.out
+*.err
+
+# Unit test / coverage reports
+coverage/
+*.cover
+.hypothesis/
+*.mocha
+
+# PyCharm
+.idea/
+
+# Visual Studio Code
+.vscode/
+.history/
+
+# Spyder project settings
+.spyderproject
+
+# Rope project settings
+.ropeproject
+
+# Pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
