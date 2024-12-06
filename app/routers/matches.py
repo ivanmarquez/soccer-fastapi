@@ -36,12 +36,12 @@ def generate_prompt(match: dict, weather: dict) -> str:
         - Teams playing the match.
 
         Data that can help you write the analysis:
-        - The match will be played at {match.get("strVenue")} in {match.get("strCountry")}.
-        - The match will take place on {match.get("dateEvent")} at {match.get("strTime")}.
-        - The home team is {match.get("strHomeTeam")} and the away team is {match.get("strAwayTeam")}.
-        {f"- The weather forecast for the match is as follows: {weather.get('weather')[0].get('description')}." if weather else ""}
-        {f"- The temperature will be {weather.get('main').get('temp')}°C with a humidity of {weather.get('main').get('humidity')}%." if weather else ""}
-        {f"- The wind speed will be {weather.get('wind').get('speed')} m/s." if weather else "Weather data is not available for this match."}
+        {f"- The match will be played at {match.get("strVenue")} in {match.get("strCountry")}." if weather and match.get("strVenue") and weather.get('strCountry') else ""}
+        {f"- The match will take place on {match.get("dateEvent")} at {match.get("strTime")}." if weather and match.get("dateEvent") and weather.get('strTime') else ""}
+        {f"- The home team is {match.get("strHomeTeam")} and the away team is {match.get("strAwayTeam")}." if weather and match.get("strHomeTeam") and weather.get('strAwayTeam') else ""}
+        {f"- The weather forecast for the match is as follows: {weather.get('weather')[0].get('description')}." if weather and weather.get('weather') else ""}
+        {f"- The temperature will be {weather.get('main').get('temp')}°C with a humidity of {weather.get('main').get('humidity')}%." if weather and weather.get('main') else ""}
+        {f"- The wind speed will be {weather.get('wind').get('speed')} m/s." if weather and weather.get('wind') else ""}
 
         Soccer Match data in JSON format: {match_string}
         Weather data in JSON format: {weather_string}"""
@@ -91,7 +91,6 @@ async def parse_response(match: dict) -> Match:
     )
 
 
-
 async def customize_response(data: dict) -> List[Match]:
     events = data.get("events", [])
     if not events:
@@ -103,8 +102,7 @@ async def customize_response(data: dict) -> List[Match]:
         async with semaphore:
             return await parse_response(event)
 
-    return await asyncio.gather(*(process_event(event) for event in events))
-
+    return await asyncio.gather(*(process_event(event) for event in events if event))
 
 
 @router.get("/{league_id}", response_model=List[Match], response_model_exclude_unset=True)
@@ -113,6 +111,8 @@ async def matches(league_id: int):
 
     try:
         data = await fetch_data(url)
+        if not data:
+            raise HTTPException(status_code=404, detail="No data found.")
         return await customize_response(data)
     except Exception as e:
         log_message(f"Error in matches endpoint: {str(e)}", level="error")
