@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import RedirectResponse
 from httpx import HTTPStatusError
 from typing import List
 from ..config import settings
@@ -25,6 +26,8 @@ async def get_leagues():
         data = await fetch_data(url)
         return await customize_response(data)
     except HTTPStatusError as e:
+        if e.response.status_code == 307:
+            return RedirectResponse(url=e.response.headers.get("Location"))
         log_message(f"HTTP error occurred: {e.response.text}", level="error")
         raise HTTPException(
             status_code=e.response.status_code,
