@@ -19,7 +19,7 @@ async def customize_response(data: dict) -> List[League]:
     leagues = data.get("leagues", [])
     return [parse_response(league) for league in leagues]
 
-@router.get("/", response_model=List[League])
+@router.get("", response_model=List[League])
 async def get_leagues():
     url = settings.API_URL_LEAGUES
     try:
