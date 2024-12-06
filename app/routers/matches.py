@@ -103,7 +103,7 @@ async def customize_response(data: dict) -> List[Match]:
             return await parse_response(event)
 
     #return await asyncio.gather(*(process_event(event) for event in events if event))
-    return await asyncio.gather(*(process_event(event) for event in events[:6] if event))
+    return await asyncio.gather(*(process_event(event) for event in events[:1] if event))
 
 
 @router.get("/{league_id}", response_model=List[Match], response_model_exclude_unset=True)
