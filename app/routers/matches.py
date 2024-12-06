@@ -15,9 +15,13 @@ router = APIRouter(prefix="/matches", tags=["matches"])
 
 
 async def get_wheater(lat: float, lon: float, timestamp: str) -> dict:
-    timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S").timestamp()
-    url = settings.API_URL_WHEATER.format(lat=lat, lon=lon, dt=int(timestamp))
-    return await fetch_data(url)
+    try:
+        timestamp = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S").timestamp()
+        url = settings.API_URL_WHEATER.format(lat=lat, lon=lon, dt=int(timestamp))
+        return await fetch_data(url)
+    except Exception as e:
+        log_message(f"Error fetching weather data: {str(e)}", level="error")
+        return {}
 
 def generate_prompt(match: dict, weather: dict) -> str:
     match_string = json.dumps(match)
@@ -103,7 +107,7 @@ async def customize_response(data: dict) -> List[Match]:
             return await parse_response(event)
 
     #return await asyncio.gather(*(process_event(event) for event in events if event))
-    return await asyncio.gather(*(process_event(event) for event in events[:1] if event))
+    return await asyncio.gather(*(process_event(event) for event in events[:12] if event))
 
 
 @router.get("/{league_id}", response_model=List[Match], response_model_exclude_unset=True)
