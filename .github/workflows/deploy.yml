@@ -30,17 +30,6 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run database migrations
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          alembic upgrade head
-
       - name: Deploy to Render
         env:
           RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
