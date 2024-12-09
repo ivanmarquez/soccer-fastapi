@@ -67,8 +67,8 @@ async def parse_response(match: dict) -> Match:
             weather = await weather_task
 
     prompt = generate_prompt(match, weather or {})
-    prompt_result = await match_analysis(prompt)
-    #prompt_result = { "prompt":  "This is a placeholder response" }
+    #prompt_result = await match_analysis(prompt)
+    prompt_result = { "prompt":  "Analysis placeholder text" }
 
     return Match(
         id=match.get("idEvent"),
